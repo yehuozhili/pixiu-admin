@@ -1,0 +1,30 @@
+.pixiuAdminHead{
+  position: relative;
+    height: 60px;
+    padding: 0 24px;
+    background-color: #FFFFFF;
+    z-index: 300;
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+    border-bottom: 1px solid #ebeef5;
+    background-color: #eff4f9;
+}
+.iconMenu:hover{
+  cursor: pointer;
+  color:gray;
+}
+.pixiuLogo{
+  margin-left: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.pixiuAdminTab{
+  padding:0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+  border-bottom: 1px solid #ebeef5;
+}

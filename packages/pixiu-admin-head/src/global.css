@@ -1,0 +1,14 @@
+@import 'antd/dist/antd.css';
+
+body {
+  -webkit-font-smoothing: antialiased;
+  background-color: #eff4f9;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+}
+
+.pixiu-head-search > .ant-select-selector{
+  border-radius: 20px !important;
+}
+.pixiu-admin-head-tab > .ant-tabs-nav{
+  margin: 0 !important;
+}

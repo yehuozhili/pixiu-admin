@@ -1,0 +1,14 @@
+{
+	"name": "root",
+	"private": true,
+	"workspaces": [
+		"packages/*"
+	],
+	"devDependencies": {
+		"lerna": "^4.0.0"
+	},
+	"scripts": {
+		"start:head": "lerna exec npm run start --scope=pixiu-admin-head ",
+		"start:body": "lerna exec npm run start --scope=pixiu-admin-body "
+	}
+}
