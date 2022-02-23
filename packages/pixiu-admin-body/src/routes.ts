@@ -17,6 +17,11 @@ const routerConfig: IRouterConfig[] = [
         component: Dashboard,
       },
       {
+        path: '/',
+        exact: true,
+        component: Home,
+      },
+      {
         path: '/page',
         exact: true,
         component: Home,

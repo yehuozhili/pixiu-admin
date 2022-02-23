@@ -3,7 +3,7 @@ import { UnorderedListOutlined } from '@ant-design/icons';
 import styles from './index.module.css';
 import { Col, Dropdown, Row, Select, Avatar, Tabs } from 'antd';
 import store from '@/store';
-import { useLocation } from 'react-router';
+import { useLocation } from 'ice';
 
 const { Option } = Select;
 const { TabPane } = Tabs;

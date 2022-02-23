@@ -2,6 +2,12 @@
   "vite": true,
   "plugins": [
     [
+      "build-plugin-icestark",
+      {
+        "type": "framework"
+      }
+    ],
+    [
       "build-plugin-ignore-style",
       {
         "libraryName": "antd"

@@ -1,6 +1,6 @@
 import { IAppConfig, runApp } from 'ice';
 
-const appConfig: IAppConfig = {
+const appConfig = {
   app: {
     rootId: 'ice-container',
   },
@@ -9,4 +9,4 @@ const appConfig: IAppConfig = {
   },
 };
 
-runApp(appConfig);
+runApp(appConfig as IAppConfig);
