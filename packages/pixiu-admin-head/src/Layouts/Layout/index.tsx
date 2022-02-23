@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { UnorderedListOutlined } from '@ant-design/icons';
 import styles from './index.module.css';
 import { Col, Dropdown, Row, Select, Avatar, Tabs } from 'antd';
 import store from '@/store';
+import { useLocation } from 'react-router';
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -19,6 +20,18 @@ export default function BasicLayout(props) {
     const changed = menu.find((v) => v.key === e);
     tabDispatchers.addTab(changed);
   };
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      tabDispatchers.storeContainer(ref.current);
+      tabDispatchers.resolveDom();
+    }
+  }, [tabDispatchers]);
+
+  const location = useLocation();
+
   return (
     <div>
       <div className={styles.pixiuAdminHead}>
@@ -46,6 +59,7 @@ export default function BasicLayout(props) {
               style={{ width: 200 }}
               showSearch
               placeholder="搜索"
+              allowClear
               optionFilterProp="children"
               onChange={onChange}
               filterOption={(input, option) =>
@@ -54,7 +68,7 @@ export default function BasicLayout(props) {
             >
               {layoutState.leafMenu.map((v: any) => {
                 return (
-                  <Option key={v.key} value={v.key}>
+                  <Option key={v.key} value={v.key} disabled={v.disabled}>
                     {v.title}
                   </Option>
                 );
@@ -72,7 +86,7 @@ export default function BasicLayout(props) {
           type="editable-card"
           hideAdd
           className="pixiu-admin-head-tab"
-          activeKey={tabState.tabs[tabState.currentTab].key}
+          activeKey={tabState.tabs[tabState.currentTab]?.key}
           onChange={(e) => {
             tabDispatchers.changeCurrent(e);
           }}
@@ -85,7 +99,17 @@ export default function BasicLayout(props) {
           })}
         </Tabs>
       </div>
-      <div className="pixiu-admin-body">{tabState.tabs[tabState.currentTab].url}</div>
+      <div className="pixiu-admin-body" style={{ height: 'calc(100vh - 60px - 41px)' }}>
+        {location.pathname === '/' ? (
+          <div
+            className="pixiu-admin-body-container"
+            style={{ height: '100%', width: '100%', position: 'relative' }}
+            ref={ref}
+          />
+        ) : (
+          props.children
+        )}
+      </div>
     </div>
   );
 }

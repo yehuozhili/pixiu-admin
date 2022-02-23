@@ -1,15 +1,24 @@
-import { Link } from 'ice';
+import { Button, Result } from 'antd';
+import { history } from 'ice';
 
-export interface Props {
-  name: string;
-}
-
-const Greeting = ({ name }: Props) => {
+const Greeting = () => {
   return (
     <div>
-      <h2>404</h2>
-      <div><Link to="/">Home</Link></div>
-      <div><Link to="/dashboard">Dashboard</Link></div>
+      <Result
+        status="404"
+        title="404"
+        subTitle="该页面不存在"
+        extra={
+          <Button
+            type="primary"
+            onClick={() => {
+              history?.push('/');
+            }}
+          >
+            Back Home
+          </Button>
+        }
+      />
     </div>
   );
 };

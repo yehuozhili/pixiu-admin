@@ -6,7 +6,7 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "allowJs": true,
-    "rootDir": "../../",
+    "rootDir": ".",
     "paths": {
       "@/*": ["./src/*"],
       "ice": [".ice"]

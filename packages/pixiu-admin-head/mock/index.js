@@ -54,7 +54,7 @@ module.exports = {
             key: '2-1',
             index: 1,
             title: '操作管理',
-            url: '/page/zcenter/s',
+            url: '/page/demo2',
           },
           {
             disabled: true,
