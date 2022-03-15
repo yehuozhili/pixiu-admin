@@ -1,6 +1,7 @@
 import { IAppConfig, runApp } from 'ice';
 import NotFound from '@/components/NotFound';
 import FrameworkLayout from '@/Layouts/FrameworkLayout';
+import './rpc';
 
 const appConfig = {
   app: {

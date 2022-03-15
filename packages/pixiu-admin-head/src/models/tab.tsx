@@ -30,16 +30,38 @@ export default {
         iframe.style.left = '0';
         iframe.style.right = '0';
         iframe.style.bottom = '0';
+        iframe.style.display = 'none';
+        const img = document.createElement('img');
+        img.src = 'https://img.alicdn.com/tfs/TB1gRhGQVXXXXb.XVXXXXXXXXXX-15-15.gif';
+        img.style.marginRight = '5px';
+        const dom = document.createElement('div');
+        dom.style.display = 'flex';
+        dom.style.alignItems = 'center';
+        dom.style.justifyContent = 'center';
+        dom.style.width = '100vw';
+        dom.style.height = '100%';
+        dom.style.fontSize = '13px';
+        dom.style.color = '#999';
+        dom.style.backgroundColor = '#fff';
+        dom.appendChild(img);
+        const txt = document.createTextNode('加载中...');
+        const next = prev.container;
+        dom.appendChild(txt);
+        iframe.onload = () => {
+          next.removeChild(dom);
+          iframe.style.display = 'block';
+        };
         if (prev.container) {
           prev.container.appendChild(iframe);
+          prev.container.appendChild(dom);
         }
         const originMap = Object.keys(prev.domMap).reduce((p, n) => {
           const r = p;
           r[n] = prev.domMap[n];
-          r[n].style.zIndex = '-1';
+          r[n][0].style.zIndex = '-1';
           return r;
         }, {});
-        originMap[current.key] = iframe;
+        originMap[current.key] = [iframe, dom];
         return {
           ...prev,
           domMap: originMap,
@@ -50,9 +72,9 @@ export default {
           const r = p;
           r[n] = prev.domMap[n];
           if (n === current.key) {
-            r[n].style.zIndex = '1';
+            r[n][0].style.zIndex = '1';
           } else {
-            r[n].style.zIndex = '-1';
+            r[n][0].style.zIndex = '-1';
           }
           return r;
         }, {});
@@ -67,7 +89,11 @@ export default {
       const dele = pre.domMap[key];
       if (dele) {
         if (pre.container) {
-          (pre.container as HTMLDivElement).removeChild(dele);
+          dele.forEach((v) => {
+            if (pre.container.contains(v)) {
+              (pre.container as HTMLDivElement).removeChild(v);
+            }
+          });
           const newmap = { ...pre.domMap };
           delete newmap[key];
           return {
@@ -84,7 +110,7 @@ export default {
       if (payload === currentObjKey) {
         current = 0;
         const { key } = prevState.tabs[0];
-        domMap[key].style.zIndex = 1;
+        domMap[key][0].style.zIndex = 1;
       }
       const newTabs = prevState.tabs.filter((v) => v.key !== payload);
       const newState = {

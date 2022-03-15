@@ -7,13 +7,58 @@ import { useLocation } from 'ice';
 
 const { Option } = Select;
 const { TabPane } = Tabs;
+const MESSEAGE_ADD_TAB = 'MESSEAGE_ADD_TAB';
+const MESSEAGE_HREF = 'MESSEAGE_HREF';
 
 export default function BasicLayout(props) {
   const [layoutState, layoutDispatchers] = store.useModel('layout');
   const [tabState, tabDispatchers] = store.useModel('tab');
+
   useEffect(() => {
     layoutDispatchers.getMenu();
   }, [layoutDispatchers]);
+
+  useEffect(() => {
+    const fn = (e) => {
+      const { data } = e;
+      try {
+        const msg = JSON.parse(data);
+        const { url } = msg.data;
+        const { type } = msg;
+        switch (type) {
+          case MESSEAGE_ADD_TAB:
+            // eslint-disable-next-line no-case-declarations
+            const menu: any[] = layoutState.leafMenu;
+            // eslint-disable-next-line no-case-declarations
+            const a = document.createElement('a');
+            a.href = url;
+            // eslint-disable-next-line no-case-declarations
+            const { pathname } = a;
+            // eslint-disable-next-line no-case-declarations
+            const changed = menu.find((v) => v.url === pathname);
+            if (changed) {
+              tabDispatchers.addTab(changed);
+            } else {
+              const item = { title: '未知', url, key: Date.now() };
+              tabDispatchers.addTab(item);
+            }
+            break;
+          case MESSEAGE_HREF:
+            window.location.href = url;
+            break;
+          default:
+            break;
+        }
+        // eslint-disable-next-line no-empty
+      } catch (s) {
+        // console.error(s);
+      }
+    };
+    window.addEventListener('message', fn);
+    return () => {
+      window.removeEventListener('message', fn);
+    };
+  }, [layoutState.leafMenu, tabDispatchers]);
 
   const onChange = (e) => {
     const menu: any[] = layoutState.leafMenu;
