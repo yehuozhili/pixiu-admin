@@ -52,8 +52,11 @@ export default {
           iframe.style.display = 'block';
         };
         if (prev.container) {
-          prev.container.appendChild(iframe);
-          prev.container.appendChild(dom);
+          const co = prev.container;
+          setTimeout(() => {
+            co.appendChild(iframe);
+            co.appendChild(dom);
+          });
         }
         const originMap = Object.keys(prev.domMap).reduce((p, n) => {
           const r = p;
@@ -112,10 +115,20 @@ export default {
         const { key } = prevState.tabs[0];
         domMap[key][0].style.zIndex = 1;
       }
-      const newTabs = prevState.tabs.filter((v) => v.key !== payload);
+      let cur = current;
+      let index = 0;
+      const newTabs = prevState.tabs.filter((v, i) => {
+        if (v.key === payload) {
+          index = i;
+        }
+        return v.key !== payload;
+      });
+      if (index < current && current > 0) {
+        cur = current - 1;
+      }
       const newState = {
         tabs: newTabs,
-        currentTab: current,
+        currentTab: cur,
       };
       return {
         ...prevState,
